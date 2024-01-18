@@ -1,0 +1,22 @@
+SERVER_PORT: 3000
+
+server:
+  port: ${SERVER_PORT}
+  servlet:
+    context-path: /api
+
+spring:
+  application:
+    name: tes-ma-service
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/db_tes_ma
+    username: root
+    password:
+    liquibase:
+      change-log: classpath:/db/changelog/db.changelog-master.yaml
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
