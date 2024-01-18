@@ -10,33 +10,34 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.example.tesMA.tesMA.services.CategoryService;
-import com.example.tesMA.tesMA.utils.dto.request.CategoryRequest;
+
+import com.example.tesMA.tesMA.services.ArticleService;
+import com.example.tesMA.tesMA.utils.dto.request.ArticleRequest;
 import com.example.tesMA.tesMA.utils.dto.response.DefaultResponse;
 
 @RestController
-@RequestMapping("/v1/category")
-public class CategoryController {
+@RequestMapping("/v1/article")
+public class ArticleController {
      @Autowired
-    private CategoryService categoryService;
+    private ArticleService articleService;
 
     @GetMapping
     public ResponseEntity<DefaultResponse> getAll() {
-        return categoryService.getAllCategorys();
+        return articleService.getAllArticles();
     }
 
     @PostMapping
-    public ResponseEntity<DefaultResponse> create(@RequestBody CategoryRequest request) {
-        return categoryService.createCategory(request);
+    public ResponseEntity<DefaultResponse> create(@RequestBody ArticleRequest request) {
+        return articleService.createArticle(request);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<DefaultResponse> update(@PathVariable int id, @RequestBody CategoryRequest request) {
-        return categoryService.updateCategory(id, request);
+    public ResponseEntity<DefaultResponse> update(@PathVariable int id, @RequestBody ArticleRequest request) {
+        return articleService.updateArticle(id, request);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<DefaultResponse> delete(@PathVariable int id) {
-        return categoryService.deleteCategory(id);
+        return articleService.deleteArticle(id);
     }
 }

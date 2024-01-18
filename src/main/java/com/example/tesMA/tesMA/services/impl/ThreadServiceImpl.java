@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.example.tesMA.tesMA.models.Category;
 import com.example.tesMA.tesMA.models.Forum;
@@ -118,7 +119,7 @@ public class ThreadServiceImpl implements ThreadService{
 
     @Override
     public Thread getThreadById(int id) {
-        return repo.findById(id).get();
+        return repo.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("Thread ID %d Not Found !!", id)));
     }
 
     
