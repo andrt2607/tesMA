@@ -1,5 +1,6 @@
 package com.example.tesMA.tesMA.services.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -7,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.example.tesMA.tesMA.models.Article;
 import com.example.tesMA.tesMA.models.Category;
+import com.example.tesMA.tesMA.repos.ArticleRepo;
 import com.example.tesMA.tesMA.repos.CategoryRepo;
 import com.example.tesMA.tesMA.services.CategoryService;
 import com.example.tesMA.tesMA.utils.Constant;
@@ -21,6 +24,9 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Autowired
     private CategoryRepo repo;
+
+    @Autowired
+    private ArticleRepo articleRepo;
 
     @Override
     public ResponseEntity<DefaultResponse> getAllCategorys() {
@@ -36,6 +42,11 @@ public class CategoryServiceImpl implements CategoryService {
         category.setName(request.name());
         category.setCreatedAt(DateUtil.getCurrentTimestamp());
         category.setUpdatedAt(DateUtil.getCurrentTimestamp());
+
+        ArrayList<Article> articles = new ArrayList<>();
+        // articleRepo.findById(1).get();
+        // articles.add(articleRepo.findById(1).get());
+        category.setArticles(articles);
         DefaultResponse defaultResponse = new DefaultResponse();
         defaultResponse.setMessage(Constant.MSG_DATA_CREATED);
         defaultResponse.setData(repo.save(category));

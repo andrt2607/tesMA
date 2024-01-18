@@ -1,5 +1,7 @@
 package com.example.tesMA.tesMA.services.impl;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +17,8 @@ import com.example.tesMA.tesMA.utils.Constant;
 import com.example.tesMA.tesMA.utils.DateUtil;
 import com.example.tesMA.tesMA.utils.dto.request.ArticleRequest;
 import com.example.tesMA.tesMA.utils.dto.response.DefaultResponse;
+import com.example.tesMA.tesMA.utils.enums.ArticleStatus;
+import com.example.tesMA.tesMA.utils.enums.ArticleType;
 
 @Service
 public class ArticleServiceImpl implements ArticleService{
@@ -41,12 +45,26 @@ public class ArticleServiceImpl implements ArticleService{
         article.setTitle(request.title());
         article.setSlug(request.slug());
         article.setCounter(request.counter());
-        // article.setCategories(targetCategory);
+        article.setBanner(request.banner());
+        article.setBody(request.body());
+        article.setImage(request.image());
+        article.setTypeArticle(ArticleType.valueOf(request.articleType()));
+        article.setStatusArticle(ArticleStatus.valueOf(request.articleStatus()));
+        article.setIsSlideShow((byte)request.isSlideShow());
+        article.setCounter(request.counter());
+        ArrayList<Category> categories = new ArrayList<>();
+        categories.add(targetCategory);
+        article.setCategories(categories);
         article.setCreatedAt(DateUtil.getCurrentTimestamp());
         article.setUpdatedAt(DateUtil.getCurrentTimestamp());
+        Article result = repo.save(article);
+        System.out.println("id yg baru dibuat: " + result.getId());
+        //masih eror disini untuk input data ke article_category
+        repo.insertArticleCategory(result.getId(), request.categoryId());
         DefaultResponse defaultResponse = new DefaultResponse();
         defaultResponse.setMessage(Constant.MSG_DATA_CREATED);
-        defaultResponse.setData(repo.save(article));
+        defaultResponse.setData(result);
+        // targetCategory.getArticles().add(article);
         return ResponseEntity.status(HttpStatus.CREATED).body(defaultResponse);
     }
 
