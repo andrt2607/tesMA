@@ -29,8 +29,13 @@ public class Forum {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Column(nullable = false, length = 100)
+    private String name;
+
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String description;
 
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String icon;
 
     @Enumerated(EnumType.STRING)
